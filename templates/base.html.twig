@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{asset ('css/css.css')}}">
+
+    </head>
+    <body>
+    <header>
+        <nav class="navbar col-lg-12">
+            <div class="col-lg-2"> <a href="../public/acceuil"><img src="../public/img/SORTIR.png" width="100"></a> </div>
+            <div class="d-flex col-lg-4 offset-lg-6">
+                <a href="/sortie/public/acceuil" class="btn btn-outline-primary n-2">Acceuil</a>
+                <a href="/sortie/public/connexion" class="btn btn-outline-primary n-2">Connexion</a>
+                <a href="/sortie/public/campus" class="btn btn-outline-primary n-2">Campus</a>
+                <a href="/sortie/public/ville" class="btn btn-outline-primary n-2">Ville</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+    <footer>
+        &copy; {{ "now"|date("Y") }}
+    </footer>
+    </div>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
