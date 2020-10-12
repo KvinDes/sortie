@@ -21,15 +21,15 @@ class Villes
      */
     private $no_ville;
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=30)
      */
     private $nom_ville;
     /**
-     * @ORM\Column(type="integer", length=5)
+     * @ORM\Column(type="integer", length=10)
      */
     private $code_postal;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
