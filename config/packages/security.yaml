@@ -1,0 +1,27 @@
+security:
+
+    providers:
+        our_db_provider:
+            entity:
+                class: App\Entity\Participants
+                property: pseudo
+
+    firewalls:
+        main:
+            pattern: ^/
+            provider: our_db_provider
+            anonymous: ~
+            form_login:
+                login_path: connexion
+                check_path: connexion
+            #logout_on_user_change: true
+            logout:
+                path: logout
+                target: acceuil
+
+    encoders:
+        App\Entity\Participants:
+            algorithm: bcrypt
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
