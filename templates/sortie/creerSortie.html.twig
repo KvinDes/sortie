@@ -1,6 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block main%}
-    <h1>Créer une sortie</h1>
-{% endblock %}
 
-{% block title %}Sortir | Acceuil{% endblock %}
+{% block title %}Créer une sortie{% endblock %}
+
+{% block body %}
+    <main class="section">
+        <div class="container">
+            <div class="level">
+                <div class="level-left">
+                    <h1 class="title is-1">Créer une sortie</h1>
+                </div>
+                <div class="level-right">
+                    <a href="{{ path('app_show_sorties')}}" class="button is-primary">Sorties</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="card_body">
+                    <br>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                    <br>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
