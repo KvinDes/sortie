@@ -2,38 +2,61 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 
-class SortieController extends AbstractController
+use App\Entity\Etat;
+use App\Entity\Participants;
+use App\Entity\Sortie;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class SortieController extends Controller
 {
-    /**
-     * @Route("/creerSortie", name="creerSortie")
-     */
-    public function creerSortie()
+    public function CreateSortieAction(Request $request) : Response
     {
-        return $this->render('sortie/creerSortie.html.twig');
+        $sortie = new Sortie();
+        $logger = $this->get('logger');
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(SortieCreateType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $em->getRepository(Participants::class)->find(1);
+            $etat = $em->getRepository(Etat::class)->find(1);
+
+            $sortie->setLieuxNoLieu($form->get('lieuxNoLieu')->getData());
+            $sortie ->setEtatsNoEtat($etat);
+            $sortie->setOrganisateur($user);
+            $sortie->setEtatsortie(1);
+
+            $em->persist($sortie);
+            $em->flush();
+
+            //$this->addFlash('notice', $this->get('translator')->trans('merchant.flash.registered'));
+            return $this->redirectToRoute('app_show_sorties');
+        }
+
+        return $this->render('sortie/create_sortie.html.twig', array('form' => $form->createView()));
     }
-    /**
-     * @Route("/afficherSortie", name="afficherSortie")
-     */
-    public function afficherSortie()
-    {
-        return $this->render('sortie/afficherSortie.html.twig');
+
+    public function EditSortieAction(){
+
     }
-    /**
-     * @Route("/modifierSortie", name="modifierSortie")
-     */
-    public function modifierSortie()
-    {
-        return $this->render('sortie/modifierSortie.html.twig');
+
+    public function DeleteSortieAction(){
+
     }
-    /**
-     * @Route("/annulerSortie", name="annulerSortie")
-     */
-    public function annulerSortie()
-    {
-        return $this->render('sortie/annulerSortie.html.twig');
+
+    public function UpdateSortieAction(){
+
+    }
+
+    public function ShowSortiesAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+        var_dump($sorties);die;
+        return $this->render(
+            'default/dashbord.html.twig', array('sorties' => $sorties)
+        );
     }
 }

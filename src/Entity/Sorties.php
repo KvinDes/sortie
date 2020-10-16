@@ -6,88 +6,116 @@ use App\Repository\SortiesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SortiesRepository::class)
+ * Sortie
+ *
+ * @ORM\Table(name="sortie")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SOrtieRepository")
  */
-class Sorties
+class Sortie
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="no_sortie", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $noSortie;
+
     /**
-     * @ORM\Column(type="integer", length=10)
-     */
-    private $no_sortie;
-    /**
-     * @ORM\Column(type="string", length=30,)
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
      */
     private $nom;
+
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datedebut", type="datetime", nullable=false, options={"default": "1000-01-01"})
      */
-    private $datedebut;
+    private $dateDebut;
+
     /**
-     * @ORM\Column(type="integer", length=10)
+     * @var int
+     *
+     * @ORM\Column(name="duree", type="integer")
      */
     private $duree;
+
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datecloture", type="datetime", nullable=false, options={"default": "1000-01-01"})
      */
-    private $datecloture;
+    private $dateCloture;
+
     /**
-     * @ORM\Column(type="integer", length=10)
+     * @var int
+     *
+     * @ORM\Column(name="nbinscriptionsmax", type="integer", nullable=false)
      */
     private $nbinscriptionsmax;
+
     /**
-     * @ORM\Column(type="string", length=500)
+     * @var string
+     *
+     * @ORM\Column(name="descriptioninfos", type="string", length=500)
      */
     private $descriptioninfos;
+
     /**
-     * @ORM\Column(type="integer", length=10)
+     * @var int
+     *
+     * @ORM\Column(name="etatsortie", type="integer", options={"default": 1})
      */
     private $etatsortie;
+
     /**
-     * @ORM\Column(type="string", length=250)
+     * @var string
+     *
+     * @ORM\Column(name="urlPhoto", type="string", length=250)
      */
     private $urlPhoto;
+
     /**
-     * @ORM\Column(type="integer", length=10)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Participants")
+     * @ORM\JoinColumn(name="organisateur", referencedColumnName="no_participant", onDelete="CASCADE", nullable=false)
      */
     private $organisateur;
-    /**
-     * @ORM\Column(type="integer", length=10)
-     */
-    private $lieux_no_lieu;
-    /**
-     * @ORM\Column(type="integer", length=10)
-     */
-    private $etats_no_etat;
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     /**
-     * @return mixed
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lieux")
+     * @ORM\JoinColumn(name="lieux_no_lieu", referencedColumnName="no_lieu", onDelete="CASCADE", nullable=false)
+     */
+    private $lieuxNoLieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Etats")
+     * @ORM\JoinColumn(name="etats_no_etat", referencedColumnName="no_etat", onDelete="CASCADE", nullable=false)
+     */
+    private $etatsNoEtat;
+
+
+    /*****Setter and Getter*****/
+    /**
+     * @return int
      */
     public function getNoSortie()
     {
-        return $this->no_sortie;
+        return $this->noSortie;
     }
 
     /**
-     * @param mixed $no_sortie
+     * @param int $noSortie
      */
-    public function setNoSortie($no_sortie)
+    public function setNoSortie(int $noSortie)
     {
-        $this->no_sortie = $no_sortie;
+        $this->noSortie = $noSortie;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNom()
     {
@@ -95,31 +123,31 @@ class Sorties
     }
 
     /**
-     * @param mixed $nom
+     * @param string $nom
      */
-    public function setNom($nom)
+    public function setNom(string $nom)
     {
         $this->nom = $nom;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getDatedebut()
+    public function getDateDebut()
     {
-        return $this->datedebut;
+        return $this->dateDebut;
     }
 
     /**
-     * @param mixed $datedebut
+     * @param \DateTime $dateDebut
      */
-    public function setDatedebut($datedebut)
+    public function setDateDebut(\DateTime $dateDebut)
     {
-        $this->datedebut = $datedebut;
+        $this->dateDebut = $dateDebut;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getDuree()
     {
@@ -127,31 +155,31 @@ class Sorties
     }
 
     /**
-     * @param mixed $duree
+     * @param int $duree
      */
-    public function setDuree($duree)
+    public function setDuree(int $duree)
     {
         $this->duree = $duree;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getDatecloture()
+    public function getDateCloture()
     {
-        return $this->datecloture;
+        return $this->dateCloture;
     }
 
     /**
-     * @param mixed $datecloture
+     * @param \DateTime $dateCloture
      */
-    public function setDatecloture($datecloture)
+    public function setDateCloture(\DateTime $dateCloture)
     {
-        $this->datecloture = $datecloture;
+        $this->dateCloture = $dateCloture;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getNbinscriptionsmax()
     {
@@ -159,15 +187,15 @@ class Sorties
     }
 
     /**
-     * @param mixed $nbinscriptionsmax
+     * @param int $nbinscriptionsmax
      */
-    public function setNbinscriptionsmax($nbinscriptionsmax)
+    public function setNbinscriptionsmax(int $nbinscriptionsmax)
     {
         $this->nbinscriptionsmax = $nbinscriptionsmax;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDescriptioninfos()
     {
@@ -175,15 +203,15 @@ class Sorties
     }
 
     /**
-     * @param mixed $descriptioninfos
+     * @param string $descriptioninfos
      */
-    public function setDescriptioninfos($descriptioninfos)
+    public function setDescriptioninfos(string $descriptioninfos)
     {
         $this->descriptioninfos = $descriptioninfos;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getEtatsortie()
     {
@@ -191,15 +219,15 @@ class Sorties
     }
 
     /**
-     * @param mixed $etatsortie
+     * @param int $etatsortie
      */
-    public function setEtatsortie($etatsortie)
+    public function setEtatsortie(int $etatsortie)
     {
         $this->etatsortie = $etatsortie;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrlPhoto()
     {
@@ -207,15 +235,15 @@ class Sorties
     }
 
     /**
-     * @param mixed $urlPhoto
+     * @param string $urlPhoto
      */
-    public function setUrlPhoto($urlPhoto)
+    public function setUrlPhoto(string $urlPhoto)
     {
         $this->urlPhoto = $urlPhoto;
     }
 
     /**
-     * @return mixed
+     * @return Participants
      */
     public function getOrganisateur()
     {
@@ -225,41 +253,41 @@ class Sorties
     /**
      * @param mixed $organisateur
      */
-    public function setOrganisateur($organisateur)
+    public function setOrganisateur(Participants $organisateur)
     {
         $this->organisateur = $organisateur;
     }
 
     /**
-     * @return mixed
+     * @return Lieux
      */
     public function getLieuxNoLieu()
     {
-        return $this->lieux_no_lieu;
+        return $this->lieuxNoLieu;
     }
 
     /**
-     * @param mixed $lieux_no_lieu
+     * @param mixed $lieuxNoLieu
      */
-    public function setLieuxNoLieu($lieux_no_lieu)
+    public function setLieuxNoLieu(Lieux $lieuxNoLieu)
     {
-        $this->lieux_no_lieu = $lieux_no_lieu;
+        $this->lieuxNoLieu = $lieuxNoLieu;
     }
 
     /**
-     * @return mixed
+     * @return Etats
      */
     public function getEtatsNoEtat()
     {
-        return $this->etats_no_etat;
+        return $this->etatsNoEtat;
     }
 
     /**
-     * @param mixed $etats_no_etat
+     * @param mixed $etatsNoEtat
      */
-    public function setEtatsNoEtat($etats_no_etat)
+    public function setEtatsNoEtat(Etats $etatsNoEtat)
     {
-        $this->etats_no_etat = $etats_no_etat;
+        $this->etatsNoEtat = $etatsNoEtat;
     }
 
 }

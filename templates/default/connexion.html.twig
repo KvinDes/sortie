@@ -1,15 +1,39 @@
 {% extends 'base.html.twig' %}
-{% block main %}
-    <form method="post">
-        <label for="username">Mail:</label>
-        <input type="text" name="_username" id="username">
-        <label for="password">Mot de passe:</label>
-        <input type="password" name="_password" id="password">
-        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-        <label for="remember_me">Se souvenir de moi</label>
-        <button type="submit">Connexion</button>
+{# app/Resources/views/login.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Sorite{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% endblock %}
+</head>
 
-    </form>
-{% endblock %}
+<body>
+<main id="login">
+    <div class="box">
+        <div class="box_header">
+            <img src="{{ asset('SORTIR.png') }}" alt="logo">
+        </div>
+        <h5 class="title is-5 has-text-danger">{{ error | default('') }}</h5>
+        <form role="form" action="{{ path('app_login') }}" method="post">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="email" name="_username" value="{{ last_username|default('') }}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Mot de passe</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="password" name="_password">
+                </div>
+            </div>
 
-{% block title %}Connexion{% endblock %}
+            <button class="button is-primary" type="submit">Connexion</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

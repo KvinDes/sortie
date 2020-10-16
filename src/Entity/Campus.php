@@ -2,64 +2,63 @@
 
 namespace App\Entity;
 
-use App\Repository\CampusRepository;
+use src\Repository\CampusRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CampusRepository", repositoryClass=CampusRepository::class)
+ * Campus
+ *
+ * @ORM\Table(name="campus")
+ * @ORM\Entity(repositoryClass="CampusRepository")
  */
 class Campus
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="no_campus", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-    /**
-     * @ORM\Column(type="integer", length=10, nullable=false)
-     */
-    private $no_campus;
-    /**
-     * @ORM\Column(type="string", length=30, nullable=false)
-     */
-    private $nom_campus;
+    private $noCampus;
 
-    public function getId(): int
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_campus", type="string", length=30, nullable=false)
+     */
+    private $nomCampus;
+
+    /*****Setter and Getter*****/
+    /**
+     * @return int
+     */
+    public function getNoCampus() : int
     {
-        return $this->id;
+        return $this->noCampus;
     }
 
     /**
-     * @return mixed
+     * @param int $noCampus
      */
-    public function getNoCampus()
+    public function setNoCampus($noCampus) : Campus
     {
-        return $this->no_campus;
+        $this->noCampus = $noCampus;
     }
 
     /**
-     * @param mixed $no_campus
+     * @return string
      */
-    public function setNoCampus($no_campus)
+    public function getNomCampus() : string
     {
-        $this->no_campus = $no_campus;
+        return $this->nomCampus;
     }
 
     /**
-     * @return mixed
+     * @param string $nomCampus
      */
-    public function getNomCampus()
+    public function setNomCampus($nomCampus) : Campus
     {
-        return $this->nom_campus;
+        $this->nomCampus = $nomCampus;
     }
-
-    /**
-     * @param mixed $nom_campus
-     */
-    public function setNomCampus($nom_campus)
-    {
-        $this->nom_campus = $nom_campus;
-    }
-
 }
